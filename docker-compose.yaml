@@ -1,0 +1,14 @@
+services:
+  api:
+    build: ./backend/nodejs
+    environment:
+      - MONGODB_URL=${MONGODB_URL}
+    container_name: calendar-api_c
+    ports:
+      - 3000:3000/tcp
+
+  calendar:
+    build: ./angular-app
+    container_name: calendar_c
+    ports:
+    - 4000:4000/tcp

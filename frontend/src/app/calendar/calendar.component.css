@@ -1,0 +1,396 @@
+button{
+    padding: 0.8rem 0.5rem;
+    border: none;
+    border-radius: 0.2rem;
+    background-color: var(--mid);
+}
+input{
+    -webkit-user-select: text; /* Chrome, Opera, Safari */
+    -moz-user-select: text; /* Firefox 2+ */
+    -ms-user-select: text; /* IE 10+ */
+
+    user-select: text;
+    background-color: var(--bg-1);
+    outline: 0.1rem solid var(--hl-2);
+    border: none;
+    border-radius: 0.2rem;
+}
+.calendar-main{
+    display: flex;
+}
+.calendar{
+    width: 80vw;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+}
+.calendar > *{
+    margin: 1rem;
+}
+.calendar-event-modal > div{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+.calendar-save{
+    width: 20rem;
+    background-color: var(--hl-1);
+    color: var(--bg-1);
+
+    &:hover{
+        background-color: var(--accent);
+        color: var(--hl-1);
+        cursor: pointer;
+    }
+}
+.calendar-delete{
+    width: 12rem;
+    background-color: var(--hl-1);
+    color: var(--bg-1);
+
+    &:hover{
+        background-color: #be3b3b;
+        color: var(--hl-1);
+        cursor: pointer;
+    }
+}
+.calendar-cancel{
+    width: 10rem;
+    background-color: transparent;
+    color: var(--hl-1);
+
+    &:hover{
+        color: var(--bg-1);
+        background-color: var(--hl-2);
+        cursor: pointer;
+    }
+}
+.calendar-event-modal, .calendar-delete-modal {
+    margin: auto auto;
+
+    border: none;
+    border-radius: 0.2rem;
+
+    padding: 2rem;
+
+    outline: 0.1rem solid var(--mid);
+    background-color: var(--bg-1);
+}
+.calendar-event-modal::backdrop, .calendar-delete-modal::backdrop{
+    background-color: rgba(0, 0, 0, 0.8);
+}
+.calendar-event-modal > *{
+    padding: 1rem;
+    display: flex;
+}
+
+.calendar-event-modal input{
+    height: 2.5rem;
+}
+
+.calendar-event-modal form{
+    height: fit-content;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.calendar-event-modal form > div, .calendar-event-modal form > fieldset{
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-top: 2rem;
+}
+.calendar-event-modal form > fieldset{
+    justify-content: center;
+    border: none;
+}
+.calendar-event-modal form > div label{
+    position: absolute;
+}
+.calendar-event-modal form >  div > input ~ label{
+    margin-left: 0.5rem;
+    background-color: var(--bg-1);
+    transform: translateY(-1.3rem);
+    transition: 0.25s;
+    padding: 0.2rem;
+}
+.calendar-event-modal form >  div > input{
+    width: 100%;
+    -webkit-min-logical-width: 97%;
+    text-indent: 0.5rem;
+}
+
+.calendar-delete-modal > *{
+    padding: 1rem;
+    display: flex;
+}
+
+.calendar-delete-modal span{
+    margin: 0 1rem;
+}
+
+.calendar-delete-modal div{
+    display: flex;
+    gap: 1rem;
+}
+.calendar-grid{
+    width: 100%;
+    display: grid;
+    grid-template-rows: auto repeat(6, 1fr);
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.calendar-visually-hidden{
+    clip: rect(0 0 0 0); 
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap; 
+    width: 1px;
+}
+.calendar-header{
+    display: flex;
+    justify-content: space-between;
+}
+.calendar-header > *{
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+.calendar-create > p{
+    &:hover{
+        color: var(--hl-1);
+        cursor: pointer
+    }
+}
+.calendar-create-small{
+    display: none;
+    margin: 1rem;
+    &:hover{
+        color: var(--accent);
+        cursor: pointer
+    }
+}
+.calendar-create-full{
+    display: flex;
+    color: var(--hl-2);
+}
+
+.calendar-header h2{
+    font-size: 2rem;
+    margin: 0 1rem;
+}
+.calendar-lucide{
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.calendar-lucide:hover{
+    cursor: pointer;
+    color:var(--accent);
+}
+.calendar-selector{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.calendar-weekdays{
+    color:var(--hl-2);
+    margin: 1rem 0;
+
+    text-wrap: none;
+    text-overflow: ellipsis;
+}
+
+.calendar-day{
+    width: auto;
+    height: 5rem;
+    margin: 0.3rem;
+
+    background-color: var(--mid);
+    color: var(--hl-1);
+
+    cursor: pointer;
+    border-radius: 0.3rem; 
+
+    text-align: start;
+    text-indent: 0.5rem;
+    line-height: 2rem;
+    text-wrap: none;
+    text-overflow: ellipsis;
+    user-select: none;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.1rem; 
+}
+.calendar-day-blank{
+    width: auto;
+    height: 5rem;
+    margin: 0.3rem;
+
+    background-color: var(--bg-2);
+    color: var(--hl-2);
+
+    cursor: pointer;
+    border-radius: 0.3rem; 
+
+    text-align: start;
+    text-indent: 0.5rem;
+    line-height: 2rem;
+    text-wrap: none;
+    text-overflow: ellipsis;
+    user-select: none;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.1rem; 
+}
+.calendar-day:hover, .calendar-day-blank:hover{
+    outline: 0.1rem solid var(--hl-2);
+}
+
+.active{
+    background-color: var(--hl-1);
+    color: var(--bg-1);
+}
+.active-blank{
+    background-color: var(--hl-2);
+    color: var(--bg-1);
+}
+.today{
+    outline: 0.1rem solid var(--accent);
+}
+
+.calendar-event{
+    height: 20%;
+    margin: 0.2rem;
+    border-radius: 0.3rem;
+
+    background-color: var(--accent);
+}
+.calendar-lucide-delete{
+    width: 2rem;
+    height: 2rem;
+    color: white;
+
+    &:hover{
+        cursor:pointer;
+        color: var(--accent);
+    }
+}
+.calendar-eventlist > *{
+    margin: 1rem;
+    padding: 0.5rem;
+}
+
+.calendar-eventlist-event{
+    background-color: var(--accent);
+    margin: 0.2rem;
+    border-radius: 0.3rem;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.3rem;
+
+    &:hover{
+        cursor: pointer;
+    }
+}
+.calendar-eventlist-event >div{
+    width: 100%;
+    text-align: start;
+    padding: 1rem;
+}
+.calendar-eventlist-event > h3{
+    margin-bottom: 0.8rem;
+}
+
+
+.event-red{
+    background-color: #be3b3b;
+    --color: #be3b3b;
+    --accentHover: #be3b3b;
+}
+.event-blue{
+    background-color: #278dc9;
+    --color: #278dc9;
+    --accentHover: #278dc9;
+}
+.event-green{
+    background-color: #26c98d;
+    --color: #26c98d;
+    --accentHover: #26c98d;
+}
+.event-yellow{
+    background-color: #dbaa24;
+    --color: #dbaa24;
+    --accentHover: #dbaa24;
+}
+.event-blank{
+    background-color: var(--mid);
+}
+
+#calendar-event-form input[type="radio"]{
+    margin: 2rem 1rem 1rem;
+    appearance: none;
+    border: none;
+    cursor: pointer;
+    width: 2rem;
+    height: 2rem;
+    background-color: var(--bg-2);
+    outline: 0.2rem solid var(--color);
+    outline-offset: 0.2rem;
+    border-radius: 50%;
+}
+#calendar-event-form input[type="radio"]:checked{
+    background-color: var(--accentHover);
+}
+
+@media screen and (max-width: 1250px){
+    .calendar{
+        width: 90vw;
+    }
+    .calendar-create-small{
+        display: flex;
+    }
+    .calendar-create-full{
+        display: none;
+    }
+    .calendar-day, .calendar-day-blank{
+        margin: 0.2rem;
+    }
+}
+@media screen and (max-width: 1024px){
+    .calendar{
+        width: 100vw;
+
+        grid-template-columns: auto;
+        grid-template-rows: auto auto;
+    }
+    .calendar > *{
+        margin: 0;
+    }
+    .calendar-event-modal, .calendar-delete-modal {
+        padding: 0.5rem;
+    }
+    .calendar-delete-modal h2{
+        display: flex;
+        flex-direction: column;
+    }
+    .calendar-delete-modal span{
+    margin: 0.5rem 1rem;
+    }
+    .calendar-header > *{
+        gap: 0;
+    }
+}

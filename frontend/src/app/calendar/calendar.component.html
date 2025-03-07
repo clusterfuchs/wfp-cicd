@@ -1,0 +1,115 @@
+<div class="calendar-main">
+    <dialog #dialog class="calendar-event-modal">
+        <h2>{{!event ? "Create new Event" : event.title}}</h2>
+        <form [formGroup]="applyForm" id="calendar-event-form" (submit)="submitEvent()">
+            <div>
+                <input type="text" id="event-title" value="{{(!event || !event._id) ? '' : event.title}}" formControlName="title" />
+                <label for="event-title"><strong>Title</strong></label>
+            </div>
+            <div>
+                <input type="datetime-local" id="event-start-date" value="{{!event || !event._id ? null : event.start_date!.toISOString().slice(0,16)}}" formControlName="start_date"/>
+                <label for="event-start-date"><strong>Start</strong></label>
+            </div>
+            <div>
+                <input type="datetime-local" id="event-end-date" value="{{(!event || !event._id) ? null : event.end_date!.toISOString().slice(0,16)}}" formControlName="end_date"/>
+                <label for="event-end-date"><strong>End</strong></label>
+            </div>
+            <fieldset>
+                <label for="event-green" class="calendar-visually-hidden">Green</label>
+                <input type="radio" name="color" value="event-green" class="event-green" id="event-green" [checked]="event ? event.color == 'event-green' : 'true'" formControlName="color"/>
+                <label for="event-blue" class="calendar-visually-hidden">Blue</label>
+                <input type="radio" name="color" value="event-blue" class="event-blue" id="event-blue" [checked]="event && event.color == 'event-blue'" formControlName="color"/>
+                <label for="event-yellow" class="calendar-visually-hidden">Yellow</label>
+                <input type="radio" name="color" value="event-yellow" class="event-yellow" id="event-yellow" [checked]="event && event.color == 'event-yellow'" formControlName="color"/>
+                <label for="event-red" class="calendar-visually-hidden">Red</label>
+                <input type="radio" name="color" value="event-red" class="event-red" id="event-red" [checked]="event && event.color == 'event-red'" formControlName="color"/>
+            </fieldset>
+        </form>
+        <div>
+            <button type="submit" form="calendar-event-form" class="calendar-save" (click)="dialog.close()">Save</button>
+            <button class="calendar-cancel" (click)="dialog.close()">Cancel</button>
+        </div>
+    </dialog>
+    <dialog #deleteModal class="calendar-delete-modal">
+        <h2>Delete <span class="{{event && event!.color}}">{{event?.title}}</span></h2>
+        <div>
+            <button type="button" class="calendar-delete" (click)="deleteEvent(event!._id); deleteModal.close()">Delete</button>
+            <button class="calendar-cancel" (click)="deleteModal.close()">Cancel</button>
+        </div>
+    </dialog>
+    <div class="calendar">
+        <div>
+            <div class="calendar-header">
+                <div>
+                    <div class="calendar-selector">
+                        <lucide-icon name="ChevronLeft" class="calendar-lucide" tabindex="0" (click)="setYear(this.year - 1)" /> 
+                        <h2>{{year}}</h2>
+                        <lucide-icon name="ChevronRight" class="calendar-lucide" tabindex="0" (click)="setYear(this.year + 1)" />
+                    </div>
+                    <div class="calendar-selector">
+                        <lucide-icon name="ChevronLeft" class="calendar-lucide" tabindex="0" (click)="setMonth(this.month - 1)" /> 
+                        <h3>{{monthString}}</h3>
+                        <lucide-icon name="ChevronRight" class="calendar-lucide" tabindex="0" (click)="setMonth(this.month + 1)" />
+                    </div>
+                </div>
+                <div class="calendar-create">
+                    <p class="calendar-create-full" (click)="dialog.showModal();setEvent(null);">+ Create Event</p>
+                    <lucide-icon name="CirclePlus" class="calendar-create-small" (click)="dialog.showModal(); setEvent(null)"/>
+                </div>
+            </div>
+            <div class="calendar-grid">
+                @for( weekday of weekdays; track weekday){
+                    <span class="calendar-weekdays">{{weekday}}</span>
+                }
+                @for( blankDay of blankArray; track blankDay){
+                    <div [ngClass]="{'calendar-day-blank': true, 'active-blank': blankDay.date.toDateString() === selectedDate.toDateString(), 'today': blankDay.date.toDateString() == today.toDateString()}" tabindex="0" (click)="setMonth(this.month - 1);changeActiveDate(blankDay)">
+                            {{blankDay.date.getDate()}}
+                            @for( event of events; track event._id){
+                                @if(event.start_date.toDateString() === blankDay.date.toDateString() || (event.start_date <= blankDay.date && event.end_date >= blankDay.date)){
+                                    <div class="calendar-event event-blank" key="event.id"></div>
+                                }
+                            }
+                    </div>
+                }
+                @for( day of dayArray; track day.date){
+                    <div [ngClass]="{'calendar-day': true, 'active': day.date.toDateString() === selectedDate.toDateString(), 'today': day.date.toDateString() == today.toDateString()}" tabindex="0" (click)="changeActiveDate(day)">
+                            {{day.date.getDate()}}
+                            @for( event of events; track event._id){
+                                @if(event.start_date.toDateString() === day.date.toDateString() || (event.start_date <= day.date && event.end_date >= day.date)){
+                                    <div [ngClass]="'calendar-event ' + event.color" key="event.id"></div>
+                                }
+                            }
+                    </div>
+                }
+                @for( blankDayAfter of blankArrayAfter; track blankDayAfter.date){
+                    <div [ngClass]="{'calendar-day-blank': true, 'active-blank': blankDayAfter.date.toDateString() === selectedDate.toDateString(), 'today': blankDayAfter.date.toDateString() == today.toDateString()}" tabindex="0" (click)="setMonth(this.month + 1);changeActiveDate(blankDayAfter)">
+                            {{blankDayAfter.date.getDate()}}
+                            @for( event of events; track event._id){
+                                @if(event.start_date.toDateString() === blankDayAfter.date.toDateString() || (event.start_date <= blankDayAfter.date && event.end_date >= blankDayAfter.date)){
+                                    <div class="calendar-event event-blank" key="event.id"></div>
+                                }
+                            }
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="calendar-eventlist">
+            <h2 class="calendar-selector">{{selectedDate.toDateString()}}</h2>
+            @for( event of events; track event){
+                @if(event.start_date.toDateString() === selectedDate.toDateString() || (event.start_date <= selectedDate && event.end_date >= selectedDate)){
+                    <div [ngClass]="event.color + ' calendar-eventlist-event'">
+                        <div  (click)="setEvent(event);dialog.showModal();">
+                            <h3>{{event.title.toUpperCase()}}</h3>
+                            <p><strong>Start: </strong>{{event.start_date.toDateString()}}, {{event.start_date.getHours()}}:{{event.start_date.getMinutes() == 0 ? ("0" + event.start_date.getMinutes()) : event.start_date.getMinutes()}} Uhr</p>
+                            <p><strong>End: </strong>{{event.end_date.toDateString()}}, {{event.end_date.getHours()}}:{{event.end_date.getMinutes() == 0 ? ("0" + event.end_date.getMinutes()) : event.end_date.getMinutes()}} Uhr</p>
+                        </div>
+                        <lucide-icon name="trash-2" class="calendar-lucide-delete" (click)="setEvent(event); deleteModal.showModal()"/>
+                    </div>
+                }
+            }
+            @if(eventOnSelectedDay()){
+                <p>No events planned on this day.</p>
+            }
+        </div>
+    </div>
+</div>
