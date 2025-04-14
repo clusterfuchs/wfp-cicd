@@ -9,7 +9,7 @@ import { EventsService } from '../events.service';
 @Component({
   selector: 'app-calendar',
   standalone: true,
-  imports: [LucideAngularModule, FormsModule, CommonModule, ReactiveFormsModule, AsyncPipe],
+  imports: [LucideAngularModule, FormsModule, CommonModule, ReactiveFormsModule],
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.css'
 })
