@@ -1,10 +1,25 @@
-pipeline{
-    agent any
-
+pipeline {
+    agent {
+        label 'agent1'
+    } 
+    environment {
+        VARIABLE= credentials('Testvariable')
+    }
     stages {
-        stage('Hello') {
+        stage('Build') {
             steps {
-                echo 'Hello World'
+                echo 'Building..'
+                echo 'Variable: $VARIABLE'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing..'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying....'
             }
         }
     }
