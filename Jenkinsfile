@@ -10,7 +10,7 @@ pipeline {
             steps {
                 echo 'Building..'
                 echo "Variable: $TEST"
-                sh 'echo "Variable: $TEST'
+                sh 'echo "Variable: $TEST"'
             }
         }
         stage('Test') {
