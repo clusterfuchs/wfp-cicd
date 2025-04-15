@@ -3,13 +3,14 @@ pipeline {
         label 'agent1'
     } 
     environment {
-        VARIABLE= credentials('Testvariable')
+        TEST = credentials('Testvariable')
     }
     stages {
         stage('Build') {
             steps {
                 echo 'Building..'
-                echo 'Variable: $VARIABLE'
+                echo "Variable: $TEST"
+                sh 'echo "Variable: $TEST'
             }
         }
         stage('Test') {
