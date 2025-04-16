@@ -7,11 +7,10 @@ import { Event } from '../event';
 import { EventsService } from '../events.service';
 
 @Component({
-  selector: 'app-calendar',
-  standalone: true,
-  imports: [LucideAngularModule, FormsModule, CommonModule, ReactiveFormsModule],
-  templateUrl: './calendar.component.html',
-  styleUrl: './calendar.component.css'
+    selector: 'app-calendar',
+    imports: [LucideAngularModule, FormsModule, CommonModule, ReactiveFormsModule],
+    templateUrl: './calendar.component.html',
+    styleUrl: './calendar.component.css'
 })
 
 export class CalendarComponent implements OnInit{
