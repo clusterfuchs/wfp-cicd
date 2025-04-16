@@ -6,6 +6,10 @@ pipeline {
         TEST = credentials('Testvariable')
     }
     stages {
+        stage('Initialize'){
+            def dockerHome = tool 'docker'
+            env.PATH = "${dockerHome}/bin:${env.PATH}"
+        }
         stage('Checkout'){
             steps{
                 echo 'Checking out...'
