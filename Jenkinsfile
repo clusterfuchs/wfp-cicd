@@ -4,6 +4,9 @@ pipeline {
     } 
     environment {
         TEST = credentials('Testvariable')
+        SSH_CREDENTIALS_ID = 'ssh-deploy-credentials'
+        DEPLOY_SERVER = '192.168.30.24' 
+        DEPLOY_PATH = '~'
     }
     // tools {
     //     dockerTool 'docker'

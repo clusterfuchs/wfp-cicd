@@ -6,7 +6,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class EventsService {
-  url= "http://127.0.0.1:3000/events";
+  // url= "http://192.168.30.24:3000/events";
+  url = process.env['SERVER_URL'] || 'DEV_A';
 
   constructor(private http: HttpClient) { }
 
