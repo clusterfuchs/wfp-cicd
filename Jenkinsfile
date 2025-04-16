@@ -1,17 +1,15 @@
 pipeline {
     agent {
-        label 'agent1'
+        label 'docker-agent-1'
     } 
     environment {
         TEST = credentials('Testvariable')
     }
+    // tools {
+    //     dockerTool 'docker'
+    // }
     stages {
         stage('Initialize'){
-            tools {
-                docker 'docker'
-                // def dockerHome = tool 'docker'
-                // env.PATH = "${dockerHome}/bin:${env.PATH}"
-            }
             steps{
                 echo 'Initializing docker...'
                 sh 'docker --version'
