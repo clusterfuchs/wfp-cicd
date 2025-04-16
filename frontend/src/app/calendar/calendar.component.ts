@@ -55,7 +55,8 @@ export class CalendarComponent implements OnInit{
   });
 
   ngOnInit(): void {
-     this.getEvents();
+    console.log("OnInit executed.")
+    this.getEvents();
   }
 
   constructor(private eventsService: EventsService){}
@@ -167,6 +168,7 @@ export class CalendarComponent implements OnInit{
 
 //Async event methods
   getEvents(): void{
+    this.events = [];
     this.eventsService.getEvents().subscribe((data: any) => {
       this.events = data as Event[];
       this.events.forEach(event => event.start_date = new Date(event.start_date))
@@ -193,4 +195,17 @@ export class CalendarComponent implements OnInit{
       })
     }
   }
+
+  limitEvents(events : Event[], day : any): Event[]{
+    let newEvents: Event[] = [];
+    events.forEach(function (event) {
+
+      if(event.start_date.toDateString() === day.date.toDateString() || (event.start_date <= day.date && event.end_date >= day.date)){
+        newEvents = [...newEvents, event];
+      }
+    })
+
+    return newEvents.slice(0,3);
+  }
+
 }

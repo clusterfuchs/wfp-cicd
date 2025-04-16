@@ -64,9 +64,17 @@
                 @for( blankDay of blankArray; track blankDay){
                     <div [ngClass]="{'calendar-day-blank': true, 'active-blank': blankDay.date.toDateString() === selectedDate.toDateString(), 'today': blankDay.date.toDateString() == today.toDateString()}" tabindex="0" (click)="setMonth(this.month - 1);changeActiveDate(blankDay)">
                             {{blankDay.date.getDate()}}
-                            @for( event of events; track event._id){
+                            <!-- @for( event of events; track event._id){
                                 @if(event.start_date.toDateString() === blankDay.date.toDateString() || (event.start_date <= blankDay.date && event.end_date >= blankDay.date)){
                                     <div class="calendar-event event-blank" key="event.id"></div>
+                                }
+                            } -->
+                            @for( event of limitEvents(events, blankDay); track event._id; let idx = $index){
+                                @if(idx != 2){
+                                    <div class="calendar-event event-blank" key="event.id"></div>
+                                }
+                                @if(limitEvents(events,blankDay).length == 3 && idx == 2){
+                                    <div [ngClass]="'calendar-short'" key="event.id"><div class="event-blank"></div><div class="event-blank"></div><div class="event-blank"></div></div>
                                 }
                             }
                     </div>
@@ -74,9 +82,17 @@
                 @for( day of dayArray; track day.date){
                     <div [ngClass]="{'calendar-day': true, 'active': day.date.toDateString() === selectedDate.toDateString(), 'today': day.date.toDateString() == today.toDateString()}" tabindex="0" (click)="changeActiveDate(day)">
                             {{day.date.getDate()}}
-                            @for( event of events; track event._id){
-                                @if(event.start_date.toDateString() === day.date.toDateString() || (event.start_date <= day.date && event.end_date >= day.date)){
+                            <!-- @for( event of events; track event._id){
+                                @if(limitItems() && event.start_date.toDateString() === day.date.toDateString() || (event.start_date <= day.date && event.end_date >= day.date)){
                                     <div [ngClass]="'calendar-event ' + event.color" key="event.id"></div>
+                                }
+                            } -->
+                            @for( event of limitEvents(events, day); track event._id; let idx = $index){
+                                @if(idx != 2){
+                                    <div [ngClass]="'calendar-event ' + event.color" key="event.id"></div>
+                                }
+                                @if(limitEvents(events,day).length == 3 && idx == 2){
+                                    <div [ngClass]="'calendar-short'" key="event.id"><div class="event-hl-2"></div><div class="event-hl-2"></div><div class="event-hl-2"></div></div>
                                 }
                             }
                     </div>
@@ -84,9 +100,17 @@
                 @for( blankDayAfter of blankArrayAfter; track blankDayAfter.date){
                     <div [ngClass]="{'calendar-day-blank': true, 'active-blank': blankDayAfter.date.toDateString() === selectedDate.toDateString(), 'today': blankDayAfter.date.toDateString() == today.toDateString()}" tabindex="0" (click)="setMonth(this.month + 1);changeActiveDate(blankDayAfter)">
                             {{blankDayAfter.date.getDate()}}
-                            @for( event of events; track event._id){
+                            <!-- @for( event of events; track event._id){
                                 @if(event.start_date.toDateString() === blankDayAfter.date.toDateString() || (event.start_date <= blankDayAfter.date && event.end_date >= blankDayAfter.date)){
                                     <div class="calendar-event event-blank" key="event.id"></div>
+                                }
+                            } -->
+                            @for( event of limitEvents(events, blankDayAfter); track event._id; let idx = $index){
+                                @if(idx != 2){
+                                    <div class="calendar-event event-blank" key="event.id"></div>
+                                }
+                                @if(limitEvents(events,blankDayAfter).length == 3 && idx == 2){
+                                    <div class="calendar-short" key="event.id"><div class="event-blank"></div><div class="event-blank"></div><div class="event-blank"></div></div>
                                 }
                             }
                     </div>

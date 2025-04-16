@@ -216,7 +216,7 @@ input{
 
     background-color: var(--mid);
     color: var(--hl-1);
-
+    
     cursor: pointer;
     border-radius: 0.3rem; 
 
@@ -230,7 +230,6 @@ input{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 0.1rem; 
 }
 .calendar-day-blank{
     width: auto;
@@ -253,7 +252,6 @@ input{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 0.1rem; 
 }
 .calendar-day:hover, .calendar-day-blank:hover{
     outline: 0.1rem solid var(--hl-2);
@@ -273,10 +271,23 @@ input{
 
 .calendar-event{
     height: 20%;
-    margin: 0.2rem;
+    margin: 2% 0.2rem;
     border-radius: 0.3rem;
 
     background-color: var(--accent);
+}
+.calendar-short{
+    height: 20%;
+    margin: 2% 0.2rem;
+
+    display: flex;
+    justify-content: center;
+    gap: 0.1rem;
+}
+.calendar-short > *{
+    margin: 1%;
+    border-radius: 50%;
+    aspect-ratio: 1 / 1;
 }
 .calendar-lucide-delete{
     width: 2rem;
@@ -339,6 +350,9 @@ input{
 }
 .event-blank{
     background-color: var(--mid);
+}
+.event-hl-2{
+    background-color: var(--hl-2);
 }
 
 #calendar-event-form input[type="radio"]{

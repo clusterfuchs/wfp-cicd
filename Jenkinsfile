@@ -6,16 +6,43 @@ pipeline {
         TEST = credentials('Testvariable')
     }
     stages {
+        stage('Checkout'){
+            steps{
+                echo 'Checking out...'
+                checkout scm
+            }
+        }
         stage('Build') {
             steps {
                 echo 'Building..'
-                echo "Variable: $TEST"
-                sh 'echo "Variable: $TEST"'
+                sh 'docker compose build --pull'
             }
         }
         stage('Test') {
             steps {
-                echo 'Testing..'
+                echo 'Starting Testing..'
+                script{
+                    try{
+                        echo 'Starting docker compose...'
+                        sh 'docker compose up -d'
+                    }
+                    catch{
+                        currentBuild.result = 'FAILURE'
+                    }
+                    finally{
+                        echo 'Stopping docker compose...'
+                        sh 'docker compose down -v'
+                    }
+                }
+            }
+            post{
+                success{
+                    echo 'Testing successfull!'
+                }
+                unsuccessful{
+                    echo 'Testing not successfull!'
+                    echo 'Preventing deployment...'
+                }
             }
         }
         stage('Deploy') {

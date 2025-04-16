@@ -9,7 +9,7 @@ services:
     #   - 3000:3000/tcp
 
   calendar:
-    build: ./angular-app
+    build: ./frontend
     container_name: calendar_c
     network_mode: host
     # ports:
