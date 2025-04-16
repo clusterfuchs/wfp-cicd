@@ -26,7 +26,8 @@ pipeline {
                         echo 'Starting docker compose...'
                         sh 'docker compose up -d'
                     }
-                    catch{
+                    catch (err){
+                        echo 'Caught: ${err}'
                         currentBuild.result = 'FAILURE'
                     }
                     finally{
