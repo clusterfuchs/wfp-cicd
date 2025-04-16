@@ -1,4 +1,4 @@
-FROM node:20-alpine AS build 
+FROM node:slim AS build
 
 WORKDIR /usr/src/app
 
@@ -14,7 +14,7 @@ RUN npm run build
 
 ################################################
 
-FROM node:20-alpine
+FROM node:slim
 
 WORKDIR /usr/app
 
