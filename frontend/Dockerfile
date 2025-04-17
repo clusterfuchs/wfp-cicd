@@ -10,7 +10,7 @@ RUN npm ci
 
 COPY . .
 
-RUN ng test
+RUN npm run test-headless 
 
 RUN npm run build
 
