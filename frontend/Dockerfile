@@ -1,6 +1,6 @@
-FROM node:slim AS build
+FROM node:23-alpine AS build
 
-RUN apt-get update && apt-get install --no-install-recommends --no-install-suggests -y chromium
+RUN apk add chromium
 
 WORKDIR /usr/src/app
 
@@ -20,7 +20,7 @@ RUN npm run build
 
 ################################################
 
-FROM node:slim
+FROM node:23-alpine
 
 WORKDIR /usr/app
 
