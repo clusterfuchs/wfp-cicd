@@ -60,8 +60,8 @@ pipeline {
                 echo 'Deploying....'
                 sshagent(credentials: ['ssh-credentials']){
                     sh '''
-                        ssh ${deploy-server} << EOF
-                        echo 'Connected to ${deploy-server}.'
+                        ssh ${DEPLOY_SERVER} << EOF
+                        echo 'Connected to ${DEPLOY_SERVER}.'
 
                         docker version
                         ip a
