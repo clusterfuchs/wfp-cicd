@@ -6,7 +6,7 @@ pipeline {
         TEST = credentials('Testvariable')
         // SSH_CREDENTIALS_ID = credentials('ssh-credentials')
         DEPLOY_SERVER = credentials('deploy-server') 
-        DEPLOY_PATH = '~'
+        DEPLOY_PATH = '~/calendar'
     }
     stages {
         stage('Initialize'){
@@ -64,7 +64,14 @@ pipeline {
                         echo 'Connected to ${DEPLOY_SERVER}.'
 
                         docker version
-                        ip a
+
+                        cd ${DEPLOY_PATH}
+                        git fetch
+                        git merge
+
+                        docker compose up -d --build --remove-orphans
+
+                        echo 'Deployment complete.'
 
                         exit 0
                         EOF
