@@ -10,6 +10,8 @@ RUN npm ci
 
 COPY . .
 
+RUN ng test
+
 RUN npm run build
 
 ################################################

@@ -4,7 +4,6 @@ pipeline {
     } 
     environment {
         TEST = credentials('Testvariable')
-        // SSH_CREDENTIALS_ID = credentials('ssh-credentials')
         DEPLOY_SERVER = credentials('deploy-server') 
         DEPLOY_PATH = '~/wfp-cicd'
     }
@@ -78,6 +77,15 @@ pipeline {
                     '''
                 }
             }
+            post{
+                unsuccessful{
+                    echo "Deployment failed!"
+                    currentBuild.result = 'FAILURE'
+                }
+                success{
+                    echo "Deployment succeeded!"
+                }
+            }
         }
     }
     post{
@@ -85,12 +93,14 @@ pipeline {
             echo 'End of pipeline.'
         }
         failure{
+            currentBuild.result = 'FAILURE'
             echo 'Pipeline failed!'
         }
         success{
             echo 'Pipeline succeeded!'
         }
         aborted{
+            currentBuild.result = 'FAILURE'
             echo 'Pipeline aborted!'
         }
     }

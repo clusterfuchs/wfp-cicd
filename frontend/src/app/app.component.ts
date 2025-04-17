@@ -11,5 +11,5 @@ import { CalendarComponent } from './calendar/calendar.component';
 })
 
 export class AppComponent {
-  title = 'angular-app';
+  title = 'calendar';
 }
