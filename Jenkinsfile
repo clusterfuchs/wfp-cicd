@@ -6,7 +6,7 @@ pipeline {
         TEST = credentials('Testvariable')
         // SSH_CREDENTIALS_ID = credentials('ssh-credentials')
         DEPLOY_SERVER = credentials('deploy-server') 
-        DEPLOY_PATH = '~/calendar'
+        DEPLOY_PATH = '~/wfp-cicd'
     }
     stages {
         stage('Initialize'){
@@ -66,8 +66,8 @@ pipeline {
                         docker version
 
                         cd ${DEPLOY_PATH}
-                        git fetch
-                        git merge
+                        git fetch || exit 1
+                        git merge || exit 1
 
                         docker compose up -d --build --remove-orphans
 
