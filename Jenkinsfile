@@ -58,27 +58,29 @@ pipeline {
             steps {
                 echo 'Deploying....'
                 sshagent(credentials: ['ssh-credentials']){
-                    try{
-                        sh '''
-                            ssh ${DEPLOY_SERVER} << EOF
-                            echo 'Connected to ${DEPLOY_SERVER}.'
+                    script{
+                        try{
+                            sh '''
+                                ssh ${DEPLOY_SERVER} << EOF
+                                echo 'Connected to ${DEPLOY_SERVER}.'
 
-                            docker version
+                                docker version
 
-                            cd ${DEPLOY_PATH}
-                            git fetch || exit 1
-                            git merge || exit 1
+                                cd ${DEPLOY_PATH}
+                                git fetch || exit 1
+                                git merge || exit 1
 
-                            docker compose up -d --build --remove-orphans || exit 1
+                                docker compose up -d --build --remove-orphans || exit 1
 
-                            echo 'Deployment complete.'
+                                echo 'Deployment complete.'
 
-                            exit 0
-                            EOF
-                        '''
-                    } catch(err){
-                        echo 'Caught: ${err}'
-                        currentBuild.result = 'FAILURE'
+                                exit 0
+                                EOF
+                            '''
+                        } catch(err){
+                            echo 'Caught: ${err}'
+                            currentBuild.result = 'FAILURE'
+                        }
                     }
                 }
             }
