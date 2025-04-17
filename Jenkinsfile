@@ -73,19 +73,19 @@ pipeline {
             }
         }
     }
+    post{
+        always{
+            echo 'End of pipeline.'
+        }
+        failure{
+            echo 'Pipeline failed!'
+        }
+        success{
+            echo 'Pipeline succeeded!'
+        }
+        aborted{
+            echo 'Pipeline aborted!'
+        }
+    }
 }
 
-post{
-    always{
-        echo 'End of pipeline.'
-    }
-    failure{
-        echo 'Pipeline failed!'
-    }
-    success{
-        echo 'Pipeline succeeded!'
-    }
-    aborted{
-        echo 'Pipeline aborted!'
-    }
-}
