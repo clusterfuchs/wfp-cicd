@@ -4,13 +4,10 @@ pipeline {
     } 
     environment {
         TEST = credentials('Testvariable')
-        SSH_CREDENTIALS_ID = 'ssh-deploy-credentials'
-        DEPLOY_SERVER = '192.168.30.24' 
+        // SSH_CREDENTIALS_ID = credentials('ssh-credentials')
+        DEPLOY_SERVER = credentials('deploy-server') 
         DEPLOY_PATH = '~'
     }
-    // tools {
-    //     dockerTool 'docker'
-    // }
     stages {
         stage('Initialize'){
             steps{
@@ -61,7 +58,34 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
+                sshagent(credentials: ['ssh-credentials']){
+                    sh '''
+                        ssh ${deploy-server} << EOF
+                        echo 'Connected to ${deploy-server}.'
+
+                        docker version
+                        ip a
+
+                        exit 0
+                        EOF
+                    '''
+                }
             }
         }
+    }
+}
+
+post{
+    always{
+        echo 'End of pipeline.'
+    }
+    failure{
+        echo 'Pipeline failed!'
+    }
+    success{
+        echo 'Pipeline succeeded!'
+    }
+    aborted{
+        echo 'Pipeline aborted!'
     }
 }
