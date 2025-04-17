@@ -1,6 +1,6 @@
 FROM node:slim AS build
 
-RUN apk add chromium
+RUN apt-get update && apt-get install -y chromium
 
 WORKDIR /usr/src/app
 
