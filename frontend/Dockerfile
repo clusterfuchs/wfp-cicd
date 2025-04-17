@@ -1,6 +1,10 @@
 FROM node:slim AS build
 
+RUN apk add chromium
+
 WORKDIR /usr/src/app
+
+ENV CHROME_BIN=/usr/bin/chromium-browser
 
 COPY package*.json .
 
