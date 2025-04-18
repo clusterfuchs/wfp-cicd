@@ -2,6 +2,9 @@ pipeline {
     agent {
         label 'docker-agent-1'
     } 
+    options {
+        failFast true
+    }
     environment {
         TEST = credentials('Testvariable')
         DEPLOY_SERVER = credentials('deploy-server') 
