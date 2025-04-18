@@ -1,4 +1,4 @@
-FROM node:slim
+FROM node:23-alpine
 
 RUN addgroup --gid 1001 nodejs && \
     adduser --uid 1001 --gid 1001 nodejs
