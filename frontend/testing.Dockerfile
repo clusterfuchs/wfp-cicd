@@ -1,4 +1,4 @@
-FROM node:slime
+FROM node:slim
 
 RUN addgroup -g 1000 nodejs && \
     adduser -u 1000 -G nodejs nodejs
