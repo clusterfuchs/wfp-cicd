@@ -2,9 +2,6 @@ pipeline {
     agent {
         label 'docker-agent-1'
     } 
-    options {
-        parallelsAlwaysFailFast()
-    }
     environment {
         TEST = credentials('Testvariable')
         DEPLOY_SERVER = credentials('deploy-server') 
@@ -41,8 +38,9 @@ pipeline {
                         sh 'docker compose up -d'
                     }
                     catch (err){
-                        echo 'Caught: ${err}'
+                        echo "Caught: ${err}"
                         currentBuild.result = 'FAILURE'
+                        error("An error has occured: ${err}")
                     }
                     finally{
                         echo 'Stopping docker compose...'
@@ -84,8 +82,9 @@ pipeline {
                                 EOF
                             '''
                         } catch(err){
-                            echo 'Caught: ${err}'
+                            echo "Caught: ${err}"
                             currentBuild.result = 'FAILURE'
+                            error("An error has occured: ${err}")
                         }
                     }
                 }
