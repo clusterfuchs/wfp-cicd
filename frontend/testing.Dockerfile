@@ -1,7 +1,7 @@
 FROM node:slim
 
-RUN addgroup --gid 1000 nodejs && \
-    adduser --uid 1000 --guid nodejs
+RUN addgroup --gid 1001 nodejs && \
+    adduser --uid 1001 --guid nodejs
 
 RUN apk add chromium
 
