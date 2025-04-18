@@ -19,4 +19,4 @@ COPY . .
 
 USER nodejs
 
-CMD [ "npm", "test-headless" ]
+CMD [ "npm", "run", "test-headless" ]
