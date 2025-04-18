@@ -11,6 +11,10 @@ ENV CHROME_BIN=/usr/bin/chromium-browser
 
 COPY package*.json .
 
+RUN pwd
+
+RUN ls
+
 RUN npm install -g @angular/cli
 
 RUN npm ci
