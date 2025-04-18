@@ -3,7 +3,7 @@ pipeline {
         label 'docker-agent-1'
     } 
     options {
-        failFast true
+        parallelAlwaysFailFast()
     }
     environment {
         TEST = credentials('Testvariable')
