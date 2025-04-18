@@ -9,17 +9,16 @@ WORKDIR /usr/src/app
 
 RUN chown nodejs:nodejs /usr/src/app
 
-USER nodejs
-
 ENV CHROME_BIN=/usr/bin/chromium-browser
 
 COPY package*.json .
 
 RUN npm install -g @angular/cli
 
+USER nodejs
+
 RUN npm ci
 
 COPY . .
-
 
 CMD [ "npm", "run", "test-headless" ]
