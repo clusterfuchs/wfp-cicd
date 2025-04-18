@@ -32,8 +32,8 @@ pipeline {
                 script{
                     try{
                         echo 'Starting unit testing...'
-                        sh 'docker build -f ./frontend/testing.Dockerfile -t calendar-test --cap-add=SYS_ADMIN ./frontend'
-                        sh 'docker run calendar-test'
+                        sh 'docker build -f ./frontend/testing.Dockerfile -t calendar-test ./frontend'
+                        sh 'docker run --cap-add=SYS_ADMIN calendar-test'
 
                         echo 'Starting docker compose...'
                         sh 'docker compose up -d'
