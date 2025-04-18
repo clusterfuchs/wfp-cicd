@@ -32,7 +32,7 @@ pipeline {
                 script{
                     try{
                         echo 'Starting unit testing...'
-                        sh 'docker build -f testing.Dockerfile'
+                        sh 'docker build -f ./frontend/testing.Dockerfile -t calendar-test .'
 
                         echo 'Starting docker compose...'
                         sh 'docker compose up -d'
