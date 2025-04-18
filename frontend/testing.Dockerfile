@@ -1,7 +1,7 @@
 FROM node:23-alpine
 
-RUN addgroup --gid 1001 nodejs && \
-    adduser --uid 1001 --gid 1001 nodejs
+RUN addgroup -g 1001 nodejs && \
+    adduser -u 1001 -G nodejs nodejs
 
 RUN apk add chromium
 
