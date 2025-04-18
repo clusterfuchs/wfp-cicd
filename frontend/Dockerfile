@@ -1,10 +1,6 @@
-FROM node:23-alpine AS build
-
-RUN apk add chromium
+FROM node:slim AS build
 
 WORKDIR /usr/src/app
-
-ENV CHROME_BIN=/usr/bin/chromium-browser
 
 COPY package*.json .
 
@@ -14,13 +10,11 @@ RUN npm ci
 
 COPY . .
 
-RUN npm run test-headless 
-
 RUN npm run build
 
 ################################################
 
-FROM node:23-alpine
+FROM node:slim
 
 WORKDIR /usr/app
 

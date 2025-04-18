@@ -31,6 +31,9 @@ pipeline {
                 echo 'Starting Testing..'
                 script{
                     try{
+                        echo 'Starting unit testing...'
+                        sh 'docker build -f testing.Dockerfile'
+
                         echo 'Starting docker compose...'
                         sh 'docker compose up -d'
                     }
