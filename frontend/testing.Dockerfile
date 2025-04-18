@@ -7,6 +7,10 @@ RUN apk add chromium
 
 WORKDIR /usr/src/app
 
+RUN chown nodejs:nodejs /usr/src/app
+
+USER nodejs
+
 ENV CHROME_BIN=/usr/bin/chromium-browser
 
 COPY package*.json .
@@ -17,6 +21,5 @@ RUN npm ci
 
 COPY . .
 
-USER nodejs
 
 CMD [ "npm", "run", "test-headless" ]
