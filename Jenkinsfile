@@ -58,12 +58,12 @@ pipeline {
 
                 echo '${GIT_COMMIT,length=7}'
 
-                sh 'Building frontend...'
-                sh 'docker build -f ./frontend/Dockerfile -t itron1x/clandar-fe:0.0.1 ./frontend'
+                echo 'Building frontend...'
+                sh 'docker build -f ./frontend/Dockerfile -t itron1x/calendar-fe:0.0.1 ./frontend'
                 sh "docker push itron1x/calendar-fe:0.0.1"
 
-                sh 'Building backend...'
-                sh 'docker build -f ./backend/nodejs/Dockerfile -t itron1x/clandar-be:0.0.1 ./backend/nodejs'
+                echo 'Building backend...'
+                sh 'docker build -f ./backend/nodejs/Dockerfile -t itron1x/calendar-be:0.0.1 ./backend/nodejs'
                 sh "docker push itron1x/calendar-be:0.0.1"
 
                 sh 'docker compose build --pull'
