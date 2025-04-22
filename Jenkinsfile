@@ -14,19 +14,19 @@ pipeline {
     stages {
         stage('Initialize'){
             steps{
-                echo '\033[92mInitializing docker...\033[0m'
+                echo '\033[1;36mInitializing docker...\033[0m'
                 sh 'docker --version'
             }
         }
         stage('Checkout'){
             steps{
-                echo '\033[92mChecking out...\033[0m'
+                echo '\033[1;36mChecking out...\033[0m'
                 checkout scm
             }
         }
         stage('Test') {
             steps {
-                echo '\033[92mStarting Testing..\033[0m'
+                echo '\033[1;36mStarting Testing..\033[0m'
                 script{
                     try{
                         echo 'Starting unit testing...'
@@ -59,15 +59,15 @@ pipeline {
         }
         stage('Build') {
             steps {
-                echo '\033[92mBuilding...\033[0m'
+                echo '\033[1;36mBuilding...\033[0m'
                 sh 'docker compose build --pull'
 
                 sh 'echo $DOCKER_CREDENTIALS_PSW | docker login -u $DOCKER_CREDENTIALS_USR --password-stdin'
 
-                sh 'docker build -f ./frontend/Dockerfile -t clandar-fe'
-                sh 'docker build -f ./backend/nodejs/Dockerfile -t clandar-fe'
-
+                sh 'docker build -f ./frontend/Dockerfile -t clandar-fe ./frontend'
                 sh 'docker push itron1x/calendar-fe:${GIT_REVISION,length=8}'
+
+                sh 'docker build -f ./backend/nodejs/Dockerfile -t clandar-be ./backend/nodejs'
                 sh 'docker push itron1x/calendar-be:${GIT_REVISION,length=8}'
             }
             post{
@@ -82,7 +82,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                echo '\033[92mDeploying....\033[0m'
+                echo '\033[1;36mDeploying....\033[0m'
                 sshagent(credentials: ['ssh-credentials']){
                     script{
                         try{
@@ -123,7 +123,7 @@ pipeline {
     }
     post{
         always{
-            echo '\033[92mEnd of pipeline.\033[0m'
+            echo '\033[1;36mEnd of pipeline.\033[0m'
         }
         failure{
             echo '\033[31mPipeline failed!\033[0m'
