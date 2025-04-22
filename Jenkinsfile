@@ -62,10 +62,10 @@ pipeline {
                 }
 
                 sh 'docker build -f ./frontend/Dockerfile -t itron1x/clandar-fe ./frontend'
-                sh "docker push itron1x/calendar-fe:$({GIT_REVISION}.take(8))"
+                sh "docker push itron1x/calendar-fe:${shortHash}"
 
                 sh 'docker build -f ./backend/nodejs/Dockerfile -t itron1x/clandar-be ./backend/nodejs'
-                sh "docker push itron1x/calendar-be:${gitShort}"
+                sh "docker push itron1x/calendar-be:${shortHash}"
 
                 sh 'docker compose build --pull'
             }
