@@ -56,16 +56,11 @@ pipeline {
 
                 sh 'echo $DOCKER_CREDENTIALS_PSW | docker login -u $DOCKER_CREDENTIALS_USR --password-stdin'
 
-                script{
-                    def shortHash = env.GIT_REVISION.take(8)
-                    env.gitShort = shortHash 
-                }
-
                 sh 'docker build -f ./frontend/Dockerfile -t itron1x/clandar-fe ./frontend'
-                sh "docker push itron1x/calendar-fe:${shortHash}"
+                sh "docker push itron1x/calendar-fe:0.0.1"
 
                 sh 'docker build -f ./backend/nodejs/Dockerfile -t itron1x/clandar-be ./backend/nodejs'
-                sh "docker push itron1x/calendar-be:${shortHash}"
+                sh "docker push itron1x/calendar-be:0.0.1"
 
                 sh 'docker compose build --pull'
             }
