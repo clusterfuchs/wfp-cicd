@@ -57,11 +57,11 @@ pipeline {
                 sh 'echo $DOCKER_CREDENTIALS_PSW | docker login -u $DOCKER_CREDENTIALS_USR --password-stdin'
 
                 echo 'Building frontend...'
-                sh 'docker build -f ./frontend/Dockerfile -t itron1x/calendar-fe:${GIT_COMMIT} ./frontend'
+                sh 'docker build -f ./frontend/Dockerfile -t itron1x/calendar-fe:${GIT_COMMIT} -t itron1x/calendar-fe:latest ./frontend'
                 sh 'docker push itron1x/calendar-fe:${GIT_COMMIT}'
 
                 echo 'Building backend...'
-                sh 'docker build -f ./backend/nodejs/Dockerfile -t itron1x/calendar-be:${GIT_COMMIT} ./backend/nodejs'
+                sh 'docker build -f ./backend/nodejs/Dockerfile -t itron1x/calendar-be:${GIT_COMMIT} -t itron1x/calnedar-be:latest ./backend/nodejs'
                 sh 'docker push itron1x/calendar-be:${GIT_COMMIT}'
 
                 sh 'docker compose build --pull'
@@ -87,6 +87,7 @@ pipeline {
                                 echo 'Connected to ${DEPLOY_SERVER}.'
 
                                 docker version
+                                export TAG=${GIT_COMMIT}
 
                                 cd ${DEPLOY_PATH}
 
