@@ -60,8 +60,6 @@ pipeline {
         stage('Build') {
             steps {
                 echo '\033[1;36mBuilding...\033[0m'
-                sh 'docker compose build --pull'
-
                 sh 'echo $DOCKER_CREDENTIALS_PSW | docker login -u $DOCKER_CREDENTIALS_USR --password-stdin'
 
                 sh 'docker build -f ./frontend/Dockerfile -t clandar-fe ./frontend'
