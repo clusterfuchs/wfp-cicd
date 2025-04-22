@@ -56,10 +56,15 @@ pipeline {
 
                 sh 'echo $DOCKER_CREDENTIALS_PSW | docker login -u $DOCKER_CREDENTIALS_USR --password-stdin'
 
-                sh 'docker build -f ./frontend/Dockerfile -t itron1x/clandar-fe ./frontend'
+                echo '${GIT_COMMIT,length=7}'
+                echo "${GIT_COMMIT,length=7}"
+
+                sh 'Building frontend...'
+                sh 'docker build -f ./frontend/Dockerfile -t itron1x/clandar-fe:0.0.1 ./frontend'
                 sh "docker push itron1x/calendar-fe:0.0.1"
 
-                sh 'docker build -f ./backend/nodejs/Dockerfile -t itron1x/clandar-be ./backend/nodejs'
+                sh 'Building backend...'
+                sh 'docker build -f ./backend/nodejs/Dockerfile -t itron1x/clandar-be:0.0.1 ./backend/nodejs'
                 sh "docker push itron1x/calendar-be:0.0.1"
 
                 sh 'docker compose build --pull'
