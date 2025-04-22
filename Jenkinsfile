@@ -56,11 +56,13 @@ pipeline {
 
                 sh 'echo $DOCKER_CREDENTIALS_PSW | docker login -u $DOCKER_CREDENTIALS_USR --password-stdin'
 
+                def gitShort = env.GIT_REVISION.take(8)
+
                 sh 'docker build -f ./frontend/Dockerfile -t itron1x/clandar-fe ./frontend'
-                sh 'docker push itron1x/calendar-fe:${GIT_REVISION,length=8}'
+                sh "docker push itron1x/calendar-fe:${gitShort}"
 
                 sh 'docker build -f ./backend/nodejs/Dockerfile -t itron1x/clandar-be ./backend/nodejs'
-                sh 'docker push itron1x/calendar-be:${GIT_REVISION,length=8}'
+                sh "docker push itron1x/calendar-be:${gitShort}"
 
                 sh 'docker compose build --pull'
             }
