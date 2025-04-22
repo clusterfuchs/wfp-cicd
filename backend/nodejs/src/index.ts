@@ -6,6 +6,7 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
 import cors from 'cors';
 
+const compression = require('compression');
 const app: Express = express();
 
 const options = {
@@ -25,6 +26,7 @@ dotenv.config();
 const swaggerSpec = swaggerJsdoc(options);
 const port = 3000;
 
+app.use(compression());
 app.use(express.json());
 
 app.get('/', (req: Request, res: Response) =>{

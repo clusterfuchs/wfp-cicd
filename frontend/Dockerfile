@@ -18,6 +18,8 @@ FROM node:slim
 
 WORKDIR /usr/app
 
+ENV NODE_ENV=production
+
 COPY --from=build /usr/src/app/dist/angular-app .
 
 CMD node server/server.mjs

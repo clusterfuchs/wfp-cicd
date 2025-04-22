@@ -6,6 +6,7 @@ pipeline {
         TEST = credentials('Testvariable')
         DEPLOY_SERVER = credentials('deploy-server') 
         DEPLOY_PATH = '~/wfp-cicd'
+        DOCKER_CREDENTIALS = credentials('docker-hub-credentials')
     }
     stages {
         stage('Initialize'){
@@ -18,12 +19,6 @@ pipeline {
             steps{
                 echo 'Checking out...'
                 checkout scm
-            }
-        }
-        stage('Build') {
-            steps {
-                echo 'Building..'
-                sh 'docker compose build --pull'
             }
         }
         stage('Test') {
@@ -55,6 +50,29 @@ pipeline {
                 }
                 unsuccessful{
                     echo 'Testing not successfull!'
+                    echo 'Preventing deployment...'
+                }
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'Building..'
+                sh 'docker compose build --pull'
+
+                sh 'echo $DOCKER_CREDENTIALS_PSW | docker login -u $DOCKER_CREDENTIALS_USR --password-stdin'
+
+                sh 'docker build -f ./frontend/Dockerfile -t clandar-fe'
+                sh 'docker build -f ./backend/nodejs/Dockerfile -t clandar-fe'
+
+                sh "docker push itron1x/calendar-fe:${GIT_COMMIT[0...7]}"
+                sh "docker push itron1x/calendar-be:${GIT_COMMIT[0...7]}"
+            }
+            post{
+                success{
+                    echo 'Building successfull!'
+                }
+                unsuccessful{
+                    echo 'Building not successfull!'
                     echo 'Preventing deployment...'
                 }
             }
