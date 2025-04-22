@@ -10,6 +10,7 @@ pipeline {
         DEPLOY_SERVER = credentials('deploy-server') 
         DEPLOY_PATH = '~/wfp-cicd'
         DOCKER_CREDENTIALS = credentials('dockerhub-credentials')
+        GIT_COMMIT = sh(returnStout: true, script: "git rev-parse --short=8 HEAD").trim()
     }
     stages {
         stage('Initialize'){
@@ -56,14 +57,12 @@ pipeline {
 
                 sh 'echo $DOCKER_CREDENTIALS_PSW | docker login -u $DOCKER_CREDENTIALS_USR --password-stdin'
 
-                echo '${GIT_COMMIT,length=7}'
-
                 echo 'Building frontend...'
-                sh 'docker build -f ./frontend/Dockerfile -t itron1x/calendar-fe:0.0.1 ./frontend'
+                sh 'docker build -f ./frontend/Dockerfile -t itron1x/calendar-fe:${GIT_COMMIT} ./frontend'
                 sh "docker push itron1x/calendar-fe:0.0.1"
 
                 echo 'Building backend...'
-                sh 'docker build -f ./backend/nodejs/Dockerfile -t itron1x/calendar-be:0.0.1 ./backend/nodejs'
+                sh 'docker build -f ./backend/nodejs/Dockerfile -t itron1x/calendar-be:${GIT_COMMIT} ./backend/nodejs'
                 sh "docker push itron1x/calendar-be:0.0.1"
 
                 sh 'docker compose build --pull'
