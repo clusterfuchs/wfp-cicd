@@ -61,7 +61,7 @@ pipeline {
                 sh 'docker push itron1x/calendar-fe:${GIT_COMMIT}'
 
                 echo 'Building backend...'
-                sh 'docker build -f ./backend/nodejs/Dockerfile -t itron1x/calendar-be:${GIT_COMMIT} -t itron1x/calnedar-be:latest ./backend/nodejs'
+                sh 'docker build -f ./backend/nodejs/Dockerfile -t itron1x/calendar-be:${GIT_COMMIT} -t itron1x/calendar-be:latest ./backend/nodejs'
                 sh 'docker push itron1x/calendar-be:${GIT_COMMIT}'
 
                 sh 'docker compose build --pull'
