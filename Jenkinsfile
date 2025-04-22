@@ -6,7 +6,6 @@ pipeline {
         ansiColor('xterm')
     }
     environment {
-        TEST = credentials('Testvariable')
         DEPLOY_SERVER = credentials('deploy-server') 
         DEPLOY_PATH = '~/wfp-cicd'
         DOCKER_CREDENTIALS = credentials('dockerhub-credentials')
@@ -90,8 +89,8 @@ pipeline {
                                 docker version
 
                                 cd ${DEPLOY_PATH}
-                                git fetch || exit 1
-                                git merge || exit 1
+
+                                docker compose pull || exit 1
 
                                 docker compose up -d --build --remove-orphans || exit 1
 

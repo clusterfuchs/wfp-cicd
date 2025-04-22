@@ -1,6 +1,6 @@
 services:
   api:
-    build: ./backend/nodejs
+    build: itron1x/calendar-be
     environment:
       - MONGODB_URL=${MONGODB_URL}
     container_name: calendar-api_c
@@ -9,7 +9,7 @@ services:
     #   - 3000:3000/tcp
 
   calendar:
-    build: ./frontend
+    build: itron1x/calendar-fe
     container_name: calendar_c
     network_mode: host
     # ports:
