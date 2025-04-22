@@ -56,7 +56,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                echo 'Building..'
+                echo 'Building...'
                 sh 'docker compose build --pull'
 
                 sh 'echo $DOCKER_CREDENTIALS_PSW | docker login -u $DOCKER_CREDENTIALS_USR --password-stdin'
@@ -64,8 +64,8 @@ pipeline {
                 sh 'docker build -f ./frontend/Dockerfile -t clandar-fe'
                 sh 'docker build -f ./backend/nodejs/Dockerfile -t clandar-fe'
 
-                sh "docker push itron1x/calendar-fe:${GIT_COMMIT[0...7]}"
-                sh "docker push itron1x/calendar-be:${GIT_COMMIT[0...7]}"
+                sh "docker push itron1x/calendar-fe:${GIT_COMMIT,length=8}"
+                sh 'docker push itron1x/calendar-be:${GIT_COMMIT,length=8}'
             }
             post{
                 success{
