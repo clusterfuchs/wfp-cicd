@@ -64,8 +64,8 @@ pipeline {
                 sh 'docker build -f ./frontend/Dockerfile -t clandar-fe'
                 sh 'docker build -f ./backend/nodejs/Dockerfile -t clandar-fe'
 
-                sh "docker push itron1x/calendar-fe:${GIT_COMMIT,length=8}"
-                sh 'docker push itron1x/calendar-be:${GIT_COMMIT,length=8}'
+                sh 'docker push itron1x/calendar-fe:${GIT_REVISION,length=8}'
+                sh 'docker push itron1x/calendar-be:${GIT_REVISION,length=8}'
             }
             post{
                 success{
