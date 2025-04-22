@@ -57,7 +57,6 @@ pipeline {
                 sh 'echo $DOCKER_CREDENTIALS_PSW | docker login -u $DOCKER_CREDENTIALS_USR --password-stdin'
 
                 echo '${GIT_COMMIT,length=7}'
-                echo "${GIT_COMMIT,length=7}"
 
                 sh 'Building frontend...'
                 sh 'docker build -f ./frontend/Dockerfile -t itron1x/clandar-fe:0.0.1 ./frontend'
