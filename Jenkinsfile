@@ -32,18 +32,11 @@ pipeline {
                         echo 'Starting unit testing...'
                         sh 'docker build -f ./frontend/testing.Dockerfile -t calendar-test ./frontend'
                         sh 'docker run --cap-add=SYS_ADMIN calendar-test'
-
-                        echo 'Starting docker compose...'
-                        sh 'docker compose up -d'
                     }
                     catch (err){
                         echo "Caught: ${err}"
                         currentBuild.result = 'FAILURE'
                         error("An error has occured: ${err}")
-                    }
-                    finally{
-                        echo 'Stopping docker compose...'
-                        sh 'docker compose down -v'
                     }
                 }
             }
@@ -60,13 +53,16 @@ pipeline {
         stage('Build') {
             steps {
                 echo '\033[1;36mBuilding...\033[0m'
+
                 sh 'echo $DOCKER_CREDENTIALS_PSW | docker login -u $DOCKER_CREDENTIALS_USR --password-stdin'
 
-                sh 'docker build -f ./frontend/Dockerfile -t clandar-fe ./frontend'
+                sh 'docker build -f ./frontend/Dockerfile -t itron1x/clandar-fe ./frontend'
                 sh 'docker push itron1x/calendar-fe:${GIT_REVISION,length=8}'
 
-                sh 'docker build -f ./backend/nodejs/Dockerfile -t clandar-be ./backend/nodejs'
+                sh 'docker build -f ./backend/nodejs/Dockerfile -t itron1x/clandar-be ./backend/nodejs'
                 sh 'docker push itron1x/calendar-be:${GIT_REVISION,length=8}'
+
+                sh 'docker compose build --pull'
             }
             post{
                 success{
