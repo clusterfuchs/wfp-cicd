@@ -5,8 +5,6 @@ services:
       - MONGODB_URL=${MONGODB_URL}
     container_name: calendar-api_c
     network_mode: host
-    # ports:
-    #   - 3000:3000/tcp
 
   calendar:
     image: itron1x/calendar-fe

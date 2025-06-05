@@ -83,7 +83,7 @@ pipeline {
                     script{
                         try{
                             sh '''
-                                ssh ${DEPLOY_SERVER} << EOF
+                                ssh prod@${DEPLOY_SERVER} << EOF
                                 echo 'Connected to ${DEPLOY_SERVER}.'
 
                                 docker version

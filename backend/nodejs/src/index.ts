@@ -29,6 +29,15 @@ const port = 3000;
 app.use(compression());
 app.use(express.json());
 
+//Metrics
+const client = require('prom-client');
+const collectDefaultMetrics = client.collectDefaultMetrics;
+collectDefaultMetrics();
+app.get('/metrics', async (req, res) => {
+res.set('Content-Type', client.register.contentType);
+res.end(await client.register.metrics());
+});
+
 app.get('/', (req: Request, res: Response) =>{
     res.send("Hello World!!");
 })
