@@ -121,6 +121,12 @@ pipeline {
     post{
         always{
             echo '\033[1;36mEnd of pipeline.\033[0m'
+
+            emailext body: '''$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
+
+Check console output at $BUILD_URL to view the results.''',
+            subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!',
+            to: 'clusterfuchs.net@gmail.com'
         }
         failure{
             echo '\033[31mPipeline failed!\033[0m'
