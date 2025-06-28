@@ -10,6 +10,3 @@ services:
     image: itron1x/calendar-fe
     container_name: calendar_c
     network_mode: host
-    # ports:
-    # - 4000:4000/tcp
-    # - test

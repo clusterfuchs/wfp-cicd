@@ -24,4 +24,4 @@ COPY --from=build /usr/src/app/dist/angular-app .
 
 CMD ["node", "server/server.mjs"]
 
-EXPOSE 4000 
+EXPOSE 443 

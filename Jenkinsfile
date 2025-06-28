@@ -83,6 +83,7 @@ pipeline {
                     script{
                         try{
                             sh '''
+                                scp ./docker-compose.yaml prod@${DEPLOY_SERVER}:${DEPLOY_PATH}/docker-compose.yaml || exit 1
                                 ssh prod@${DEPLOY_SERVER} << EOF
                                 echo 'Connected to ${DEPLOY_SERVER}.'
 
