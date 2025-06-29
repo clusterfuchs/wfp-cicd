@@ -9,5 +9,4 @@ services:
   calendar:
     image: itron1x/calendar-fe
     container_name: calendar_c
-    ports:
-      - 443:3000/tcp
+    network_mode: host
