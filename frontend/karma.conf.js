@@ -32,7 +32,13 @@ module.exports = function (config) {
       ]
     },
     reporters: ['progress', 'kjhtml'],
-    browsers: ['Chrome'],
+    browsers: ['Chrome', 'ChromeHeadless'],
+    customBrowsers: {
+      ChromeHeadless: {
+        base: 'Chrome',
+        flags: ['--headless', '--no-sandbox']
+      }
+    },
     restartOnFileChange: true
   });
 };
