@@ -52,19 +52,26 @@ pipeline {
         }
         stage('Build') {
             steps {
-                echo '\033[1;36mBuilding...\033[0m'
+                try{
+                    echo '\033[1;36mBuilding...\033[0m'
 
-                sh 'echo $DOCKER_CREDENTIALS_PSW | docker login -u $DOCKER_CREDENTIALS_USR --password-stdin'
+                    sh 'echo $DOCKER_CREDENTIALS_PSW | docker login -u $DOCKER_CREDENTIALS_USR --password-stdin'
 
-                echo 'Building frontend...'
-                sh 'docker build -f ./frontend/Dockerfile -t itron1x/calendar-fe:${GIT_COMMIT} -t itron1x/calendar-fe:latest ./frontend'
-                sh 'docker push -a itron1x/calendar-fe'
+                    echo 'Building frontend...'
+                    sh 'docker build -f ./frontend/Dockerfile -t itron1x/calendar-fe:${GIT_COMMIT} -t itron1x/calendar-fe:latest ./frontend'
+                    sh 'docker push -a itron1x/calendar-fe'
 
-                echo 'Building backend...'
-                sh 'docker build -f ./backend/nodejs/Dockerfile -t itron1x/calendar-be:${GIT_COMMIT} -t itron1x/calendar-be:latest ./backend/nodejs'
-                sh 'docker push -a itron1x/calendar-be'
+                    echo 'Building backend...'
+                    sh 'docker build -f ./backend/nodejs/Dockerfile -t itron1x/calendar-be:${GIT_COMMIT} -t itron1x/calendar-be:latest ./backend/nodejs'
+                    sh 'docker push -a itron1x/calendar-be'
 
-                sh 'docker compose build --pull'
+                    sh 'docker compose build --pull'
+                }
+                catch (err){
+                    echo "Caught: ${err}"
+                    currentBuild.result = 'FAILURE'
+                    error("An error has occured: ${err}")
+                }
             }
             post{
                 success{
