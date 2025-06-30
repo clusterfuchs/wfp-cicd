@@ -19,7 +19,7 @@ describe('CalendarComponent', () => {
   });
 
   it('should create', () => {
-    // expect(component).toBeTruthy();
-    expect(component).toBeNull();
+    expect(component).toBeTruthy();
+    // expect(component).toBeNull();
   });
 });

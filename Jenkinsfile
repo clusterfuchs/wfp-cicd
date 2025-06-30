@@ -31,7 +31,7 @@ pipeline {
                     try{
                         echo 'Starting unit testing...'
                         sh 'docker build -f ./frontend/testing.Dockerfile -t calendar-test ./frontend'
-                        sh 'docker run --cap-add=SYS_ADMIN calendar-test'
+                        sh 'docker run calendar-test'
                     }
                     catch (err){
                         echo "Caught: ${err}"
