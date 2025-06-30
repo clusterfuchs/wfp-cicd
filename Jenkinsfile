@@ -31,7 +31,7 @@ pipeline {
                     try{
                         echo 'Starting unit testing...'
                         sh 'docker build -f ./frontend/testing.Dockerfile -t calendar-test ./frontend'
-                        sh 'docker run calendar-test'
+                        sh 'docker run --security-opt seccomp=unconfined calendar-test'
                     }
                     catch (err){
                         echo "Caught: ${err}"

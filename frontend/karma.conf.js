@@ -36,7 +36,7 @@ module.exports = function (config) {
     customBrowsers: {
       ChromeHeadless: {
         base: 'Chrome',
-        flags: ['--headless', '--no-sandbox']
+        flags: ['--headless', '--no-sandbox', '--disable-dev-shm-usage']
       }
     },
     restartOnFileChange: true
