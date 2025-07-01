@@ -18,10 +18,10 @@ export class EventsService {
       'Expires': '0'
     })
     
-    const random = new Date().getTime(); 
-    const cacheBustedUrl = `${this.url}?_=${random}`;
+    // const random = new Date().getTime(); 
+    // const cacheBustedUrl = `${this.url}?_=${random}`;
 
-    return this.http.get(cacheBustedUrl, {headers: headers});
+    return this.http.get(this.url, {headers: headers});
   }
 
   createEvent(title: string, start_date: Date, end_date: Date, color: string): Observable<any>{
