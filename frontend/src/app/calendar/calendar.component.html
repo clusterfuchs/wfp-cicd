@@ -119,9 +119,9 @@
         </div>
         <div class="calendar-eventlist">
             <h2 class="calendar-selector">{{selectedDate.toDateString()}}</h2>
-
-            <p *ngIf="isLoading">Loading events...</p>
-
+            @if(isLoading){
+                Loading events...
+            }
             @if(!isLoading){
                 @for( event of events; track event){
                     @if(event.start_date.toDateString() === selectedDate.toDateString() || (event.start_date <= selectedDate && event.end_date >= selectedDate)){
@@ -136,9 +136,9 @@
                     }
 
                 }
-            }
-            @if(eventOnSelectedDay()){
-                <p>No events planned on this day.</p>
+                @if(eventOnSelectedDay()){
+                    <p>No events planned on this day.</p>
+                }
             }
         </div>
     </div>
