@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class EventsService {
-  url= `http://${API_BASE_URL}/events`;
+  url= 'https://cal.clusterfuchs.net/events';
 
   constructor(private http: HttpClient) { }
 
