@@ -168,7 +168,7 @@ export class CalendarComponent implements OnInit{
 
 //Async event methods
   getEvents(): void{
-    this.events = [];
+    // this.events = [];
     this.eventsService.getEvents().subscribe((data: any) => {
       this.events = data as Event[];
       this.events.forEach(event => event.start_date = new Date(event.start_date))
@@ -198,6 +198,9 @@ export class CalendarComponent implements OnInit{
 
   limitEvents(events : Event[], day : any): Event[]{
     let newEvents: Event[] = [];
+
+    if (!events) return [];
+
     events.forEach(function (event) {
 
       if(event.start_date.toDateString() === day.date.toDateString() || (event.start_date <= day.date && event.end_date >= day.date)){

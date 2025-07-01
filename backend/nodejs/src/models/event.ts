@@ -9,7 +9,7 @@ interface IEvent{
 
 const EventSchema = new Schema<IEvent>({
     title: {
-        type: String, required: true, unique: true
+        type: String, required: true
     },
     start_date: {
         type: Date, required: true
