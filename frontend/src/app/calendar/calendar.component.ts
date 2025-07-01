@@ -36,7 +36,7 @@ export class CalendarComponent implements OnInit{
   blankArray: any[] = this.getBlankArray(this.firstDay,this.lastMonthDays, this.year,this.month); 
   blankArrayAfter: any[] = this.getBlankArrayAfter(this.firstDay,this.monthDays,this.year,this.month);
 
-  events!: Event[]; 
+  events: Event[] = []; 
   event: Event | null = {
       '_id': null,
       'title': "",
