@@ -17,18 +17,20 @@ export function app(): express.Express {
   server.set('view engine', 'html');
   server.set('views', browserDistFolder);
 
-  server.disable('e-tag');
-
   // Example Express Rest API endpoints
   // server.get('/api/**', (req, res) => { });
   // Serve static files from /browser
   server.get('**', express.static(browserDistFolder, {
-    // maxAge: '1y',
+    maxAge: '1y',
     index: 'index.html',
   }));
 
   // All regular routes use the Angular engine
   server.get('**', (req, res, next) => {
+    res.setHeader('Cache-Control', 'no-store');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+
     const { protocol, originalUrl, baseUrl, headers } = req;
 
     commonEngine
