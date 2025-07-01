@@ -5,24 +5,10 @@ services:
     environment:
       - MONGODB_URL=${MONGODB_URL}
     container_name: calendar-api
-    # network_mode: host
-    networks:
-      - intern
-    ports:
-      - 3000:3000
+    network_mode: host
 
   calendar:
     image: itron1x/calendar-fe
     restart: unless-stopped
-    environment:
-      - API_BASE_URL=${API_BASE_URL}
     container_name: calendar
-    # network_mode: host
-    networks:
-      - intern
-    ports:
-      - 80:80
-
-networks:
-  intern:
-    driver: bridge
+    network_mode: host
