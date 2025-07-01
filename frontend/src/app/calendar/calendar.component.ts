@@ -173,6 +173,7 @@ export class CalendarComponent implements OnInit{
       this.events.forEach(event => event.start_date = new Date(event.start_date))
       this.events.forEach(event => event.end_date = new Date(event.end_date))
     })
+    console.log(this.events);
   }
 
   createEvent(title: string, start_date: Date, end_date: Date, color: string): void{
