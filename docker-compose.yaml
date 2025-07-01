@@ -4,11 +4,23 @@ services:
     restart: unless-stopped
     environment:
       - MONGODB_URL=${MONGODB_URL}
-    container_name: calendar-api_c
-    network_mode: host
+    container_name: calendar-api
+    # network_mode: host
+    networks:
+      - intern
+    ports:
+      - 3000:3000
 
   calendar:
     image: itron1x/calendar-fe
     restart: unless-stopped
-    container_name: calendar_c
-    network_mode: host
+    container_name: calendar
+    # network_mode: host
+    networks:
+      - intern
+    ports:
+      - 80:80
+
+networks:
+  intern:
+    driver: bridge
