@@ -117,7 +117,10 @@
                 }
             </div>
         </div>
-        <div class="calendar-eventlist">
+        <div *ngIf="isLoading" class="calendar-loading">
+            <p>Loading events...</p>
+        </div>
+        <div *ngIf="!isLoading" class="calendar-eventlist">
             <h2 class="calendar-selector">{{selectedDate.toDateString()}}</h2>
             @for( event of events; track event){
                 @if(event.start_date.toDateString() === selectedDate.toDateString() || (event.start_date <= selectedDate && event.end_date >= selectedDate)){

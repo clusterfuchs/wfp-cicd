@@ -54,6 +54,8 @@ export class CalendarComponent implements OnInit{
     color: new FormControl('')
   });
 
+  isLoading: boolean = false;
+
   ngOnInit(): void {
     this.getEvents();
   }
@@ -167,17 +169,16 @@ export class CalendarComponent implements OnInit{
 
 //Async event methods
   getEvents(): void{
-    var test;
-    // this.events = [];
+    this.isLoading = true;
+
     this.eventsService.getEvents().subscribe((data: any) => {
-      // test = data as Event[];
-      console.log("Events fetched:");
-      console.log(data);
       this.events = data as Event[];
+
       this.events.forEach(event => event.start_date = new Date(event.start_date))
       this.events.forEach(event => event.end_date = new Date(event.end_date))
+
+      this.isLoading = false;
     })
-    // console.log(this.events);
   }
 
   createEvent(title: string, start_date: Date, end_date: Date, color: string): void{
