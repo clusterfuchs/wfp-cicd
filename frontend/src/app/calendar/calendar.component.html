@@ -117,21 +117,24 @@
                 }
             </div>
         </div>
-        <div *ngIf="isLoading" class="calendar-loading">
-            <p>Loading events...</p>
-        </div>
-        <div *ngIf="!isLoading" class="calendar-eventlist">
+        <div class="calendar-eventlist">
             <h2 class="calendar-selector">{{selectedDate.toDateString()}}</h2>
-            @for( event of events; track event){
-                @if(event.start_date.toDateString() === selectedDate.toDateString() || (event.start_date <= selectedDate && event.end_date >= selectedDate)){
-                    <div [ngClass]="event.color + ' calendar-eventlist-event'">
-                        <div  (click)="setEvent(event);dialog.showModal();">
-                            <h3>{{event.title.toUpperCase()}}</h3>
-                            <p><strong>Start: </strong>{{event.start_date.toDateString()}}, {{event.start_date.getHours()}}:{{event.start_date.getMinutes() == 0 ? ("0" + event.start_date.getMinutes()) : event.start_date.getMinutes()}} Uhr</p>
-                            <p><strong>End: </strong>{{event.end_date.toDateString()}}, {{event.end_date.getHours()}}:{{event.end_date.getMinutes() == 0 ? ("0" + event.end_date.getMinutes()) : event.end_date.getMinutes()}} Uhr</p>
+
+            <p *ngIf="isLoading">Loading events...</p>
+
+            @if(!isLoading){
+                @for( event of events; track event){
+                    @if(event.start_date.toDateString() === selectedDate.toDateString() || (event.start_date <= selectedDate && event.end_date >= selectedDate)){
+                        <div [ngClass]="event.color + ' calendar-eventlist-event'">
+                            <div  (click)="setEvent(event);dialog.showModal();">
+                                <h3>{{event.title.toUpperCase()}}</h3>
+                                <p><strong>Start: </strong>{{event.start_date.toDateString()}}, {{event.start_date.getHours()}}:{{event.start_date.getMinutes() == 0 ? ("0" + event.start_date.getMinutes()) : event.start_date.getMinutes()}} Uhr</p>
+                                <p><strong>End: </strong>{{event.end_date.toDateString()}}, {{event.end_date.getHours()}}:{{event.end_date.getMinutes() == 0 ? ("0" + event.end_date.getMinutes()) : event.end_date.getMinutes()}} Uhr</p>
+                            </div>
+                            <lucide-icon name="trash-2" class="calendar-lucide-delete" (click)="setEvent(event); deleteModal.showModal()"/>
                         </div>
-                        <lucide-icon name="trash-2" class="calendar-lucide-delete" (click)="setEvent(event); deleteModal.showModal()"/>
-                    </div>
+                    }
+
                 }
             }
             @if(eventOnSelectedDay()){
