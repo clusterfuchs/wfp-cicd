@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -12,7 +12,14 @@ export class EventsService {
   constructor(private http: HttpClient) { }
 
   getEvents(): Observable<any>{
-    return this.http.get(this.url, {headers: { Accept: 'application/json'}});
+    const headers = new HttpHeaders({
+      'Accept': 'application/json',
+      'Cache-Control': 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+      'Pragma': 'no-cache',
+      'Expires': '0'
+    });
+
+    return this.http.get(this.url, {headers: headers});
   }
 
   createEvent(title: string, start_date: Date, end_date: Date, color: string): Observable<any>{

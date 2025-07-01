@@ -184,7 +184,12 @@ export class CalendarComponent implements OnInit{
 
   updateEvent(_id: string, body: object): void{
     this.eventsService.updateEvent(_id, body).subscribe((data: any) =>{
-        this.getEvents();
+        // this.getEvents();
+
+        data.start_date = new Date(data.start_date);
+        data.end_date = new Date(data.end_date);
+
+        this.events = [...this.events, data];
     })
   }
 
