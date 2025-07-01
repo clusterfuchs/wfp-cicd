@@ -169,6 +169,8 @@ export class CalendarComponent implements OnInit{
 
 //Async event methods
   getEvents(): void{
+    this.events = [];
+
     this.isLoading = true;
 
     this.eventsService.getEvents().subscribe((data: any) => {
