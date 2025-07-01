@@ -19,6 +19,13 @@ const router = express.Router();
 router.get('/', async (req: Request, res: Response) =>{
     try{
         const events: any = await Event.find({});
+
+        res.set({
+            'Cache-Control': 'no-cache, no-store, must-revalidate', // HTTP 1.1.
+            'Pragma': 'no-cache', // HTTP 1.0.
+            'Expires': '0' // Proxies.
+        });
+
         return res.status(200).json(events);
     } catch (error: any){
         console.log(error);
