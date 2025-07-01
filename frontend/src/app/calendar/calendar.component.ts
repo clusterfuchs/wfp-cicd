@@ -202,6 +202,7 @@ export class CalendarComponent implements OnInit{
   }
 
   limitEvents(events : Event[], day : any): Event[]{
+    console.log("Calling limit Events with day: ", day);
     let newEvents: Event[] = [];
 
     if (!events) return [];
