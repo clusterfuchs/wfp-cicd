@@ -28,6 +28,7 @@ const port = 3000;
 
 app.use(compression());
 app.use(express.json());
+app.disable('e-tag');
 
 //Metrics
 const client = require('prom-client');
